@@ -20,5 +20,8 @@
         "@codeceptjs/ui": "^0.7.0",
         "codeceptjs": "^3.5.8",
         "playwright": "^1.40.0"
+    },
+    "dependencies": {
+        "@faker-js/faker": "^8.3.1"
     }
 }
