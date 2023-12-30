@@ -2,15 +2,16 @@ const shoppingCart = require("../pages/shoppingCart");
 
 Feature("Carrinho de compras");
 
-Scenario("Adicionar produto no carrinho", ({ I, loginPage }) => {
-  loginPage.efetuoLogin("standard_user", "secret_sauce");
-  I.seeElementInDOM(".shopping_cart_link");
-  I.click("#add-to-cart-sauce-labs-backpack");
-  I.click("#shopping_cart_container");
-  I.seeElement(".title", "Your Cart");
-  I.seeElement(".cart_quantity", "1");
-  I.seeElement("#remove-sauce-labs-backpack");
-});
+Scenario(
+  "Adicionar produto no carrinho",
+  ({ I, loginPage, shoppingCartPage }) => {
+    loginPage.efetuoLogin("standard_user", "secret_sauce");
+    I.seeElementInDOM(".shopping_cart_link");
+    I.click("#add-to-cart-sauce-labs-backpack");
+    I.click("#shopping_cart_container");
+    shoppingCartPage.produtosEscolhidos("1");
+  },
+);
 
 Scenario(
   "Remover produto do carrinho",
@@ -31,7 +32,6 @@ Scenario(
     I.click("#add-to-cart-sauce-labs-backpack");
     I.click("#shopping_cart_container");
     shoppingCartPage.retornaHome();
-    I.seeElement(".title", "Products");
   },
 );
 
@@ -42,9 +42,7 @@ Scenario(
     I.seeElementInDOM(".shopping_cart_link");
     I.click("#add-to-cart-sauce-labs-backpack");
     I.click("#shopping_cart_container");
-    I.seeElement(".title", "Your Cart");
-    I.seeElement(".cart_quantity", "1");
+    shoppingCartPage.produtosEscolhidos("1");
     shoppingCartPage.checkout();
-    I.seeElement(".title", "Checkout: Your Information");
   },
 );

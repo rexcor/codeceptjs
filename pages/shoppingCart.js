@@ -1,6 +1,8 @@
 const { I } = inject();
 
 module.exports = {
+  shopppingCartUrl: "/cart.html",
+
   elements: {
     cartQty: ".cart_quantity",
     cart: ".cart_item",
@@ -21,22 +23,28 @@ module.exports = {
     css: "#checkout",
   },
 
-  removoProduto: function (qty, productNameDescription) {
-    I.amOnPage("/cart.html");
+  produtosEscolhidos: function (qty, productNameDescription) {
+    I.amOnPage(this.shopppingCartUrl);
     I.seeElement(this.elements.cartQty, qty);
     I.seeElement(this.elements.productName, productNameDescription);
+  },
+
+  removoProduto: function (qty, productNameDescription) {
+    this.produtosEscolhidos(qty, productNameDescription);
     const removeButton = this.removeButton(productNameDescription);
     I.click(removeButton);
     I.dontSeeElement(this.elements.cart);
   },
 
   retornaHome: function () {
-    I.amOnPage("/cart.html");
+    I.amOnPage(this.shopppingCartUrl);
     I.click(this.continueShoppingButton);
+    I.seeElement(".title", "Products");
   },
 
   checkout: function () {
     I.click(this.checkoutButton);
     I.amOnPage("/checkout-step-one.html");
+    I.seeElement(".title", "Checkout: Your Information");
   },
 };
